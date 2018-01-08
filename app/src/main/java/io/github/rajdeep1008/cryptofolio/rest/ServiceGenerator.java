@@ -1,10 +1,8 @@
-package io.github.rajdeep1008.cryptofolio;
+package io.github.rajdeep1008.cryptofolio.rest;
 
 import java.util.List;
 
-import io.github.rajdeep1008.cryptofolio.rest.ApiClient;
-import io.github.rajdeep1008.cryptofolio.rest.HTTPLoggingInterceptor;
-import io.github.rajdeep1008.cryptofolio.rest.ResponseCallback;
+import io.github.rajdeep1008.cryptofolio.model.Crypto;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     private static String BASE_URL = "https://api.coinmarketcap.com/v1/";
+    public static final String IMAGE_URL = "https://files.coinmarketcap.com/static/img/coins/32x32/%s.png";
 
     private static OkHttpClient httpClient = new OkHttpClient.Builder()
             .addInterceptor(new HTTPLoggingInterceptor())
