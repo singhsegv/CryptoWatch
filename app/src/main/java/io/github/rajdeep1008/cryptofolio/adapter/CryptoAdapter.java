@@ -1,7 +1,11 @@
 package io.github.rajdeep1008.cryptofolio.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,10 +87,20 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
             symbolTv.setText(item.getSymbol() + " | ");
             nameTv.setText(item.getName());
             priceTv.setText(item.getPriceUsd());
-            dayChangeTv.setText("1h: " + item.getPercentChange24h());
-            hourChangeTv.setText("24h: " + item.getPercentChange24h());
+            hourChangeTv.setText(getColoredChanges(item, "1h: " + item.getPercentChange1h() + "%"));
+            dayChangeTv.setText(getColoredChanges(item, "24h: " + item.getPercentChange24h() + "%"));
 
             Glide.with(mContext).load(String.format(ServiceGenerator.IMAGE_URL, item.getId())).into(symbolIv);
+        }
+
+        public Spannable getColoredChanges(Crypto item, String value) {
+            Spannable temp = new SpannableString(value);
+            if (Double.parseDouble(item.getPercentChange1h()) < 0) {
+                temp.setSpan(new ForegroundColorSpan(Color.RED), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } else {
+                temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            return temp;
         }
     }
 }

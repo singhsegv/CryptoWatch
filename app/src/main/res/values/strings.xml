@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Crypto Folio</string>
+    <string name="text_favorites">Favorites</string>
+    <string name="text_watchlist">Watch</string>
+    <string name="text_feed">Feed</string>
+    <string name="text_portfolio">Portfolio</string>
+    <string name="text_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

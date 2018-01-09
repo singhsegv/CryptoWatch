@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
-    android:background="@android:color/white"
-    android:elevation="8dp">
+    android:elevation="0dp"
+    android:background="@android:color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,8 +19,8 @@
 
             <ImageView
                 android:id="@+id/symbol_iv"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/ic_launcher_round" />
 
@@ -32,7 +32,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_toEndOf="@id/symbol_iv"
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="BTC | " />
 
@@ -43,7 +43,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/symbol_tv"
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:text="Bitcoin" />
 
             <TextView
@@ -54,7 +54,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="16dp"
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="5000$" />
 
@@ -74,8 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/div"
             android:layout_marginTop="16dp"
-            android:paddingEnd="48dp"
-            android:paddingStart="48dp">
+            android:paddingEnd="24dp"
+            android:paddingStart="56dp">
 
             <TextView
                 android:id="@+id/hour_change_tv"
@@ -85,6 +85,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:text="1h: 4.20%" />
 
             <TextView
@@ -95,6 +96,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:text="24h: 2.20%" />
 
         </RelativeLayout>

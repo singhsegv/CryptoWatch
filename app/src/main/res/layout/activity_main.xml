@@ -1,15 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context="io.github.rajdeep1008.cryptofolio.activity.MainActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/round_toolbar"
+            android:elevation="4dp"
+            android:gravity="center_horizontal"
+            app:contentInsetStart="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Crypto Folio"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="22sp" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_navigation"
+        android:layout_below="@+id/appbar"
         tools:listitem="@layout/feed_item_layout" />
+
+    <ProgressBar
+        android:id="@+id/prograss_bar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorAccent"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_above="@+id/bottom_navigation"/>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@color/bnv_foreground"
+        app:itemTextColor="@color/bnv_foreground"
+        app:menu="@menu/bottom_navigation_main" />
 
 </RelativeLayout>
