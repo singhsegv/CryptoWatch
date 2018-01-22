@@ -39,13 +39,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/appbar"
-        android:layout_marginBottom="?attr/actionBarSize" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
@@ -60,5 +53,12 @@
         app:itemIconTint="@color/bnv_foreground"
         app:itemTextColor="@color/bnv_foreground"
         app:menu="@menu/bottom_navigation_main" />
+
+    <io.github.rajdeep1008.cryptofolio.extras.NonSwipeableViewPager
+        android:id="@+id/main_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appbar"
+        android:layout_marginBottom="?attr/actionBarSize" />
 
 </RelativeLayout>
