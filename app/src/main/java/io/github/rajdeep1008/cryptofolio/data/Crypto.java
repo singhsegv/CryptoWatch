@@ -1,7 +1,11 @@
-package io.github.rajdeep1008.cryptofolio.model;
+package io.github.rajdeep1008.cryptofolio.data;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -10,50 +14,81 @@ import com.google.gson.annotations.SerializedName;
  * Created by rajdeep1008 on 17/12/17.
  */
 
+@Entity(tableName = "crypto")
 public class Crypto implements Parcelable {
 
+    @PrimaryKey()
     @SerializedName("id")
     @Expose
+    @NonNull
     private String id;
+
+    @ColumnInfo(name = "name")
     @SerializedName("name")
     @Expose
     private String name;
+
+    @ColumnInfo(name = "symbol")
     @SerializedName("symbol")
     @Expose
     private String symbol;
+
+    @ColumnInfo(name = "rank")
     @SerializedName("rank")
     @Expose
     private String rank;
+
+    @ColumnInfo(name = "price_usd")
     @SerializedName("price_usd")
     @Expose
     private String priceUsd;
+
+    @ColumnInfo(name = "price_btc")
     @SerializedName("price_btc")
     @Expose
     private String priceBtc;
+
+    @ColumnInfo(name = "24h_volume_usd")
     @SerializedName("24h_volume_usd")
     @Expose
     private String _24hVolumeUsd;
+
+    @ColumnInfo(name = "market_cap_usd")
     @SerializedName("market_cap_usd")
     @Expose
     private String marketCapUsd;
+
+    @ColumnInfo(name = "available_supply")
     @SerializedName("available_supply")
     @Expose
     private String availableSupply;
+
+    @ColumnInfo(name = "total_supply")
     @SerializedName("total_supply")
     @Expose
     private String totalSupply;
+
+    @ColumnInfo(name = "max_supply")
     @SerializedName("max_supply")
     @Expose
     private String maxSupply;
+
+    @ColumnInfo(name = "percent_change_1h")
     @SerializedName("percent_change_1h")
     @Expose
     private String percentChange1h;
+
+    @ColumnInfo(name = "percent_change_24h")
     @SerializedName("percent_change_24h")
     @Expose
     private String percentChange24h;
+
+    @ColumnInfo(name = "percent_change_7d")
     @SerializedName("percent_change_7d")
     @Expose
     private String percentChange7d;
+
+    @ColumnInfo(name = "last_updated")
     @SerializedName("last_updated")
     @Expose
     private String lastUpdated;
@@ -74,6 +109,9 @@ public class Crypto implements Parcelable {
         percentChange24h = in.readString();
         percentChange7d = in.readString();
         lastUpdated = in.readString();
+    }
+
+    public Crypto() {
     }
 
     public static final Creator<Crypto> CREATOR = new Creator<Crypto>() {
@@ -172,4 +210,63 @@ public class Crypto implements Parcelable {
         return lastUpdated;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public void setPriceUsd(String priceUsd) {
+        this.priceUsd = priceUsd;
+    }
+
+    public void setPriceBtc(String priceBtc) {
+        this.priceBtc = priceBtc;
+    }
+
+    public void set_24hVolumeUsd(String _24hVolumeUsd) {
+        this._24hVolumeUsd = _24hVolumeUsd;
+    }
+
+    public void setMarketCapUsd(String marketCapUsd) {
+        this.marketCapUsd = marketCapUsd;
+    }
+
+    public void setAvailableSupply(String availableSupply) {
+        this.availableSupply = availableSupply;
+    }
+
+    public void setTotalSupply(String totalSupply) {
+        this.totalSupply = totalSupply;
+    }
+
+    public void setMaxSupply(String maxSupply) {
+        this.maxSupply = maxSupply;
+    }
+
+    public void setPercentChange1h(String percentChange1h) {
+        this.percentChange1h = percentChange1h;
+    }
+
+    public void setPercentChange24h(String percentChange24h) {
+        this.percentChange24h = percentChange24h;
+    }
+
+    public void setPercentChange7d(String percentChange7d) {
+        this.percentChange7d = percentChange7d;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
 }

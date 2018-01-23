@@ -30,5 +30,9 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.0.2'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.android.support:support-v4:27.0.2'
+    implementation 'android.arch.persistence.room:runtime:' + rootProject.archRoomVersion;
+    annotationProcessor 'android.arch.persistence.room:compiler:' + rootProject.archRoomVersion;
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    debugCompile 'com.amitshekhar.android:debug-db:1.0.2'
 }

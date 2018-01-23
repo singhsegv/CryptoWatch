@@ -2,7 +2,7 @@ package io.github.rajdeep1008.cryptofolio.rest;
 
 import java.util.List;
 
-import io.github.rajdeep1008.cryptofolio.model.Crypto;
+import io.github.rajdeep1008.cryptofolio.data.Crypto;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;

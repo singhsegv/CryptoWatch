@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.rajdeep1008.cryptofolio.R;
-import io.github.rajdeep1008.cryptofolio.model.Crypto;
+import io.github.rajdeep1008.cryptofolio.data.Crypto;
 import io.github.rajdeep1008.cryptofolio.rest.ServiceGenerator;
 
 /**
@@ -49,6 +49,11 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         Crypto cryptoItem = itemList.get(position);
         holder.init(cryptoItem);
+    }
+
+    public void addAll(List<Crypto> list) {
+        itemList = list;
+        notifyDataSetChanged();
     }
 
     @Override
