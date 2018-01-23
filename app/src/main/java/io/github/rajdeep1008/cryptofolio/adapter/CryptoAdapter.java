@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.format.DateUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,7 +76,16 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
         @BindView(R.id.hour_change_tv)
         TextView hourChangeTv;
 
+        @BindView(R.id.week_change_tv)
+        TextView weekChangeTv;
+
+        @BindView(R.id.last_updated_tv)
+        TextView lastUpdatedTv;
+
         Context mContext;
+        private static final int TYPE_HOUR = 0;
+        private static final int TYPE_DAY = 1;
+        private static final int TYPE_WEEK = 2;
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
@@ -83,22 +93,56 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
             mContext = context;
         }
 
-        public void init(Crypto item) {
+        private void init(Crypto item) {
             symbolTv.setText(item.getSymbol() + " | ");
             nameTv.setText(item.getName());
             priceTv.setText(item.getPriceUsd());
-            hourChangeTv.setText(getColoredChanges(item, "1h: " + item.getPercentChange1h() + "%"));
-            dayChangeTv.setText(getColoredChanges(item, "24h: " + item.getPercentChange24h() + "%"));
+            hourChangeTv.setText(getColoredChanges(item, "1h: " + item.getPercentChange1h() + "%", TYPE_HOUR));
+            dayChangeTv.setText(getColoredChanges(item, "24h: " + item.getPercentChange24h() + "%", TYPE_DAY));
+            weekChangeTv.setText(getColoredChanges(item, "7d: " + item.getPercentChange7d() + "%", TYPE_WEEK));
+
+            lastUpdatedTv.setText("(Updated: " + DateUtils.getRelativeTimeSpanString(Long.parseLong(item.getLastUpdated()) * 1000, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS) + ")");
 
             Glide.with(mContext).load(String.format(ServiceGenerator.IMAGE_URL, item.getId())).into(symbolIv);
         }
 
-        public Spannable getColoredChanges(Crypto item, String value) {
+        private Spannable getColoredChanges(Crypto item, String value, int type) {
             Spannable temp = new SpannableString(value);
-            if (Double.parseDouble(item.getPercentChange1h()) < 0) {
-                temp.setSpan(new ForegroundColorSpan(Color.RED), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            } else {
-                temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            switch (type) {
+                case TYPE_HOUR:
+                    if (item.getPercentChange1h() != null) {
+                        if (Double.parseDouble(item.getPercentChange1h()) < 0) {
+                            temp.setSpan(new ForegroundColorSpan(Color.RED), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        } else {
+                            temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        }
+                    } else {
+                        hourChangeTv.setVisibility(View.GONE);
+                    }
+                    break;
+                case TYPE_DAY:
+                    if (item.getPercentChange24h() != null) {
+                        if (Double.parseDouble(item.getPercentChange24h()) < 0) {
+                            temp.setSpan(new ForegroundColorSpan(Color.RED), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        } else {
+                            temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        }
+                    } else {
+                        dayChangeTv.setVisibility(View.GONE);
+                    }
+                    break;
+                case TYPE_WEEK:
+                    if (item.getPercentChange7d() != null) {
+                        if (Double.parseDouble(item.getPercentChange7d()) < 0) {
+                            temp.setSpan(new ForegroundColorSpan(Color.RED), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        } else {
+                            temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        }
+                    } else {
+                        weekChangeTv.setVisibility(View.GONE);
+                    }
+                    break;
             }
             return temp;
         }

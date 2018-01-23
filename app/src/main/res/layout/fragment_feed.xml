@@ -4,16 +4,23 @@
     android:layout_height="match_parent"
     tools:context="io.github.rajdeep1008.cryptofolio.fragment.FeedFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/main_rv"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/bottom_navigation"
-        android:layout_below="@+id/appbar"
-        tools:listitem="@layout/feed_item_layout" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/main_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottom_navigation"
+            android:layout_below="@+id/appbar"
+            tools:listitem="@layout/feed_item_layout" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
-        android:id="@+id/prograss_bar"
+        android:id="@+id/progress_bar"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_centerInParent="true"

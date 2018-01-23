@@ -2,9 +2,9 @@ package io.github.rajdeep1008.cryptofolio.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +26,11 @@ public class FeedFragment extends Fragment {
     @BindView(R.id.main_rv)
     RecyclerView mainRv;
 
-    @BindView(R.id.prograss_bar)
+    @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
 
     ServiceGenerator generator;
     CryptoAdapter mAdapter;
@@ -38,9 +41,22 @@ public class FeedFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
         ButterKnife.bind(this, rootView);
 
-        Log.d("test", "onCreateView: ------------------------------");
         progressBar.setVisibility(View.VISIBLE);
         generator = new ServiceGenerator();
+        loadData();
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
+        return rootView;
+    }
+
+    public void loadData() {
         generator.getFeed(new ResponseCallback<List<Crypto>>() {
             @Override
             public void success(List<Crypto> cryptos) {
@@ -57,6 +73,9 @@ public class FeedFragment extends Fragment {
                 Toast.makeText(getActivity(), "Error in loading", Toast.LENGTH_SHORT).show();
             }
         });
-        return rootView;
+    }
+
+    public void scrollToTop() {
+        mainRv.smoothScrollToPosition(0);
     }
 }

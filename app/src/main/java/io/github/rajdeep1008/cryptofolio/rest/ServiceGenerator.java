@@ -37,7 +37,7 @@ public class ServiceGenerator {
 
     public void getFeed(final ResponseCallback<List<Crypto>> callback) {
         ApiClient apiClient = createService(ApiClient.class);
-        Call<List<Crypto>> call = apiClient.getCryptoData();
+        Call<List<Crypto>> call = apiClient.getCryptoData(0);
 
         call.enqueue(new Callback<List<Crypto>>() {
             @Override

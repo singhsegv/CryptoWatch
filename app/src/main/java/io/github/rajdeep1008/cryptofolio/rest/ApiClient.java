@@ -5,6 +5,7 @@ import java.util.List;
 import io.github.rajdeep1008.cryptofolio.model.Crypto;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Created by rajdeep1008 on 17/12/17.
@@ -13,5 +14,5 @@ import retrofit2.http.GET;
 public interface ApiClient {
 
     @GET("ticker")
-    Call<List<Crypto>> getCryptoData();
+    Call<List<Crypto>> getCryptoData(@Query("limit") int limit);
 }
