@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import io.github.rajdeep1008.cryptofolio.adapter.CryptoAdapter;
 import io.github.rajdeep1008.cryptofolio.data.Crypto;
 import io.github.rajdeep1008.cryptofolio.data.CryptoDao;
 import io.github.rajdeep1008.cryptofolio.extras.AppDatabase;
+import io.github.rajdeep1008.cryptofolio.extras.Utilities;
 import io.github.rajdeep1008.cryptofolio.rest.ResponseCallback;
 import io.github.rajdeep1008.cryptofolio.rest.ServiceGenerator;
 
@@ -85,6 +87,8 @@ public class FeedFragment extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 List<Crypto> list = cryptos;
                 mAdapter.addAll(list);
+                cryptoDao.clearTable();
+                cryptoDao.insertAll(list);
             }
 
             @Override

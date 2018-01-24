@@ -1,7 +1,9 @@
 package io.github.rajdeep1008.cryptofolio.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -19,8 +21,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnLongClick;
 import io.github.rajdeep1008.cryptofolio.R;
 import io.github.rajdeep1008.cryptofolio.data.Crypto;
+import io.github.rajdeep1008.cryptofolio.extras.Utilities;
 import io.github.rajdeep1008.cryptofolio.rest.ServiceGenerator;
 
 /**
@@ -87,7 +91,8 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
         @BindView(R.id.last_updated_tv)
         TextView lastUpdatedTv;
 
-        Context mContext;
+        private Context mContext;
+        private Crypto currentItem;
         private static final int TYPE_HOUR = 0;
         private static final int TYPE_DAY = 1;
         private static final int TYPE_WEEK = 2;
@@ -99,6 +104,7 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
         }
 
         private void init(Crypto item) {
+            currentItem = item;
             symbolTv.setText(item.getSymbol() + " | ");
             nameTv.setText(item.getName());
             priceTv.setText(item.getPriceUsd());
@@ -120,7 +126,9 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
                         if (Double.parseDouble(item.getPercentChange1h()) < 0) {
                             temp.setSpan(new ForegroundColorSpan(Color.RED), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         } else {
-                            temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            String tempString = value.substring(0, 4) + "+" + value.substring(4);
+                            temp = new SpannableString(tempString);
+                            temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, tempString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         }
                     } else {
                         hourChangeTv.setVisibility(View.GONE);
@@ -131,7 +139,9 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
                         if (Double.parseDouble(item.getPercentChange24h()) < 0) {
                             temp.setSpan(new ForegroundColorSpan(Color.RED), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         } else {
-                            temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            String tempString = value.substring(0, 5) + "+" + value.substring(5);
+                            temp = new SpannableString(tempString);
+                            temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, tempString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         }
                     } else {
                         dayChangeTv.setVisibility(View.GONE);
@@ -142,7 +152,9 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
                         if (Double.parseDouble(item.getPercentChange7d()) < 0) {
                             temp.setSpan(new ForegroundColorSpan(Color.RED), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         } else {
-                            temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, value.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            String tempString = value.substring(0, 4) + "+" + value.substring(4);
+                            temp = new SpannableString(tempString);
+                            temp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.positiveGreen)), 4, tempString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         }
                     } else {
                         weekChangeTv.setVisibility(View.GONE);
@@ -150,6 +162,35 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
                     break;
             }
             return temp;
+        }
+
+        @OnLongClick(R.id.item_holder)
+        public boolean itemLongClicked() {
+            String[] menuItems;
+            final boolean favorite = Utilities.checkFavorite(mContext.getApplicationContext(), currentItem);
+
+            if (favorite) {
+                menuItems = new String[]{"Remove from favorites"};
+            } else {
+                menuItems = new String[]{"Add to favorites"};
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setItems(menuItems, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (i == 0) {
+                        if (favorite) {
+                            Utilities.removeFavorites(mContext.getApplicationContext(), currentItem.getId());
+                        } else {
+                            Utilities.addFavorites(mContext.getApplicationContext(), currentItem.getId());
+                        }
+                    }
+                }
+            });
+
+            builder.create().show();
+            return true;
         }
     }
 }

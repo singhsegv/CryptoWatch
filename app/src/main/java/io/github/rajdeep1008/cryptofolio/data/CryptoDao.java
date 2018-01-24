@@ -19,7 +19,7 @@ public interface CryptoDao {
 
     @Update
     void updateAll(List<Crypto> cryptos);
-    
+
     @Query("SELECT * FROM crypto")
     List<Crypto> getAll();
 
@@ -31,4 +31,7 @@ public interface CryptoDao {
 
     @Query("SELECT COUNT(*) from crypto")
     int getCryptoCount();
+
+    @Query("DELETE FROM crypto")
+    void clearTable();
 }
