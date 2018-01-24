@@ -13,6 +13,7 @@ import io.github.rajdeep1008.cryptofolio.R;
 import io.github.rajdeep1008.cryptofolio.adapter.MainPagerAdapter;
 import io.github.rajdeep1008.cryptofolio.extras.BottomNavigationViewHelper;
 import io.github.rajdeep1008.cryptofolio.extras.NonSwipeableViewPager;
+import io.github.rajdeep1008.cryptofolio.fragment.FavoritesFragment;
 import io.github.rajdeep1008.cryptofolio.fragment.FeedFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -79,5 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public void updateFavorites() {
+        FavoritesFragment fragment = (FavoritesFragment) mPager.getAdapter().instantiateItem(mPager, 0);
+        fragment.loadFavorites();
     }
 }

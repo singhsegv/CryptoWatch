@@ -31,7 +31,7 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
             case 3:
                 return new PortfolioFragment();
             case 4:
-                return new FeedFragment();
+                return new PortfolioFragment();
         }
         return null;
     }

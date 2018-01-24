@@ -61,4 +61,25 @@ public class Utilities {
         }
         return (ArrayList<String>) favoriteList;
     }
+
+    //    public Job createJob(FirebaseJobDispatcher dispatcher) {
+//        int periodicity = (int) TimeUnit.MINUTES.toSeconds(6);
+//        int toleranceInterval = (int) TimeUnit.MINUTES.toSeconds(1);
+//
+//        Job job = dispatcher.newJobBuilder()
+//                .setService(CryptoUpdateService.class)
+//                .setTag("CryptoUpdateJob")
+//                .setLifetime(Lifetime.FOREVER)
+//                .setReplaceCurrent(true)
+//                .setRecurring(true)
+//                .setTrigger(Trigger.executionWindow(periodicity - toleranceInterval, periodicity))
+//                .setConstraints(Constraint.ON_ANY_NETWORK)
+//                .build();
+//
+//        return job;
+//    }
+
+//        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(getActivity()));
+//        Job job = createJob(dispatcher);
+//        dispatcher.schedule(job);
 }

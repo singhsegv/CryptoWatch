@@ -15,4 +15,5 @@ public interface ApiClient {
 
     @GET("ticker")
     Call<List<Crypto>> getCryptoData(@Query("limit") int limit);
+
 }

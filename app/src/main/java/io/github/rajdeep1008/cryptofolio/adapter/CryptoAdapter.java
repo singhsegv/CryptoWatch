@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -23,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnLongClick;
 import io.github.rajdeep1008.cryptofolio.R;
+import io.github.rajdeep1008.cryptofolio.activity.MainActivity;
 import io.github.rajdeep1008.cryptofolio.data.Crypto;
 import io.github.rajdeep1008.cryptofolio.extras.Utilities;
 import io.github.rajdeep1008.cryptofolio.rest.ServiceGenerator;
@@ -182,8 +184,12 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
                     if (i == 0) {
                         if (favorite) {
                             Utilities.removeFavorites(mContext.getApplicationContext(), currentItem.getId());
+                            Toast.makeText(mContext, "Removed", Toast.LENGTH_SHORT).show();
+                            ((MainActivity)mContext).updateFavorites();
                         } else {
                             Utilities.addFavorites(mContext.getApplicationContext(), currentItem.getId());
+                            Toast.makeText(mContext, "Added", Toast.LENGTH_SHORT).show();
+                            ((MainActivity)mContext).updateFavorites();
                         }
                     }
                 }
