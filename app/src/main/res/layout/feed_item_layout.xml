@@ -42,10 +42,12 @@
 
             <TextView
                 android:id="@+id/name_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/symbol_tv"
+                android:layout_toStartOf="@id/price_tv"
+                android:maxLines="1"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 tools:text="Bitcoin" />

@@ -42,6 +42,7 @@ public class FeedFragment extends Fragment {
     private CryptoAdapter mAdapter;
     private AppDatabase appDatabase;
     private CryptoDao cryptoDao;
+    private List<Crypto> mainList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,13 +94,13 @@ public class FeedFragment extends Fragment {
             @Override
             public void success(List<Crypto> cryptos) {
                 progressBar.setVisibility(View.GONE);
-                List<Crypto> list = cryptos;
-                mAdapter.addAll(list);
+                mainList = cryptos;
+                mAdapter.addAll(mainList);
 
                 if (cryptoDao.getCryptoCount() == 0) {
-                    cryptoDao.insertAll(list);
+                    cryptoDao.insertAll(mainList);
                 } else {
-                    cryptoDao.updateAll(list);
+                    cryptoDao.updateAll(mainList);
                 }
             }
 
@@ -115,4 +116,12 @@ public class FeedFragment extends Fragment {
         mainRv.smoothScrollToPosition(0);
     }
 
+    public void showSearchList(String text) {
+        List<Crypto> searchList = cryptoDao.searchCryptos("%" + text.toUpperCase() + "%", "%" + text.toLowerCase() + "%");
+        mAdapter.addAll(searchList);
+    }
+
+    public void showMainList() {
+        mAdapter.addAll(mainList);
+    }
 }

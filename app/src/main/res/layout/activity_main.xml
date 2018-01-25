@@ -25,13 +25,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageButton
+                    android:id="@+id/back_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:background="@android:color/transparent"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_action_back"
+                    android:visibility="gone" />
+
                 <TextView
+                    android:id="@+id/heading_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="Crypto Folio"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    android:visibility="visible" />
+
+                <ImageButton
+                    android:id="@+id/search_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@android:color/transparent"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_action_search"
+                    android:tint="@color/colorPrimaryDark" />
+
+                <EditText
+                    android:id="@+id/search_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@id/back_btn"
+                    android:layout_toStartOf="@+id/search_btn"
+                    android:background="@null"
+                    android:hint="Search..."
+                    android:maxLines="1"
+                    android:paddingStart="8dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 

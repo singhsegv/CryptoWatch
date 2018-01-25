@@ -29,6 +29,9 @@ public interface CryptoDao {
     @Query("SELECT * FROM crypto WHERE id LIKE :cryptoId")
     Crypto getById(String cryptoId);
 
+    @Query("SELECT * FROM crypto WHERE symbol LIKE :idQuery or name LIKE :nameQuery")
+    List<Crypto> searchCryptos(String idQuery, String nameQuery);
+
     @Query("SELECT COUNT(*) from crypto")
     int getCryptoCount();
 
