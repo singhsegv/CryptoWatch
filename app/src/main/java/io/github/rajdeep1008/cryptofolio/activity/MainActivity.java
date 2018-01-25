@@ -131,6 +131,19 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
             }
         });
+
+        searchEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                searchEt.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(searchEt, InputMethodManager.SHOW_IMPLICIT);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -150,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.search_btn)
     public void showSearchBar() {
         searchEt.setVisibility(View.VISIBLE);
+        searchEt.requestFocus();
         backBtn.setVisibility(View.VISIBLE);
         searchBtn.setVisibility(View.GONE);
         headingTv.setVisibility(View.GONE);
@@ -159,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackClicked() {
         searchEt.setText("");
         searchEt.setVisibility(View.GONE);
+        searchEt.clearFocus();
         hideKeyboard();
         backBtn.setVisibility(View.GONE);
         searchBtn.setVisibility(View.VISIBLE);
