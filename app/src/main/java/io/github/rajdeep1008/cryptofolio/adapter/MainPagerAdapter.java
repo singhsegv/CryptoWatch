@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import io.github.rajdeep1008.cryptofolio.fragment.FavoritesFragment;
 import io.github.rajdeep1008.cryptofolio.fragment.FeedFragment;
 import io.github.rajdeep1008.cryptofolio.fragment.PortfolioFragment;
+import io.github.rajdeep1008.cryptofolio.fragment.SettingsFragment;
 import io.github.rajdeep1008.cryptofolio.fragment.WatchListFragment;
 
 /**
@@ -31,7 +32,7 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
             case 3:
                 return new PortfolioFragment();
             case 4:
-                return new PortfolioFragment();
+                return new SettingsFragment();
         }
         return null;
     }

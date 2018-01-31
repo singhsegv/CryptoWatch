@@ -1,12 +1,9 @@
-package io.github.rajdeep1008.cryptofolio.extras;
+package io.github.rajdeep1008.cryptofolio.data;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-
-import io.github.rajdeep1008.cryptofolio.data.Crypto;
-import io.github.rajdeep1008.cryptofolio.data.CryptoDao;
 
 /**
  * Created by rajdeep1008 on 23/01/18.

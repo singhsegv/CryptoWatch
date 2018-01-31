@@ -43,6 +43,41 @@ public class Crypto implements Parcelable {
     @Expose
     private String priceUsd;
 
+    @ColumnInfo(name = "price_aud")
+    @SerializedName("price_aud")
+    @Expose
+    private String priceAud;
+
+    @ColumnInfo(name = "price_cad")
+    @SerializedName("price_cad")
+    @Expose
+    private String priceCad;
+
+    @ColumnInfo(name = "price_eur")
+    @SerializedName("price_eur")
+    @Expose
+    private String priceEur;
+
+    @ColumnInfo(name = "price_hkd")
+    @SerializedName("price_hkd")
+    @Expose
+    private String priceHkd;
+
+    @ColumnInfo(name = "price_gbp")
+    @SerializedName("price_gbp")
+    @Expose
+    private String priceGbp;
+
+    @ColumnInfo(name = "price_jpy")
+    @SerializedName("price_jpy")
+    @Expose
+    private String priceJpy;
+
+    @ColumnInfo(name = "price_inr")
+    @SerializedName("price_inr")
+    @Expose
+    private String priceInr;
+
     @ColumnInfo(name = "price_btc")
     @SerializedName("price_btc")
     @Expose
@@ -268,5 +303,61 @@ public class Crypto implements Parcelable {
 
     public void setLastUpdated(String lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public String getPriceAud() {
+        return priceAud;
+    }
+
+    public void setPriceAud(String priceAud) {
+        this.priceAud = priceAud;
+    }
+
+    public String getPriceCad() {
+        return priceCad;
+    }
+
+    public void setPriceCad(String priceCad) {
+        this.priceCad = priceCad;
+    }
+
+    public String getPriceEur() {
+        return priceEur;
+    }
+
+    public void setPriceEur(String priceEur) {
+        this.priceEur = priceEur;
+    }
+
+    public String getPriceHkd() {
+        return priceHkd;
+    }
+
+    public void setPriceHkd(String priceHkd) {
+        this.priceHkd = priceHkd;
+    }
+
+    public String getPriceGbp() {
+        return priceGbp;
+    }
+
+    public void setPriceGbp(String priceGbp) {
+        this.priceGbp = priceGbp;
+    }
+
+    public String getPriceJpy() {
+        return priceJpy;
+    }
+
+    public void setPriceJpy(String priceJpy) {
+        this.priceJpy = priceJpy;
+    }
+
+    public String getPriceInr() {
+        return priceInr;
+    }
+
+    public void setPriceInr(String priceInr) {
+        this.priceInr = priceInr;
     }
 }

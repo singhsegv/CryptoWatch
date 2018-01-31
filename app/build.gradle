@@ -30,6 +30,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.0.2'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.android.support:support-v4:27.0.2'
+    implementation 'com.android.support:preference-v14:27.0.2'
     implementation 'android.arch.persistence.room:runtime:' + rootProject.archRoomVersion;
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
     annotationProcessor 'android.arch.persistence.room:compiler:' + rootProject.archRoomVersion;

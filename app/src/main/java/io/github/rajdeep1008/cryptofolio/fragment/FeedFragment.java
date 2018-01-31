@@ -1,10 +1,12 @@
 package io.github.rajdeep1008.cryptofolio.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,9 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.rajdeep1008.cryptofolio.R;
 import io.github.rajdeep1008.cryptofolio.adapter.CryptoAdapter;
+import io.github.rajdeep1008.cryptofolio.data.AppDatabase;
 import io.github.rajdeep1008.cryptofolio.data.Crypto;
 import io.github.rajdeep1008.cryptofolio.data.CryptoDao;
-import io.github.rajdeep1008.cryptofolio.extras.AppDatabase;
 import io.github.rajdeep1008.cryptofolio.rest.ResponseCallback;
 import io.github.rajdeep1008.cryptofolio.rest.ServiceGenerator;
 
@@ -43,6 +45,8 @@ public class FeedFragment extends Fragment {
     private AppDatabase appDatabase;
     private CryptoDao cryptoDao;
     private List<Crypto> mainList;
+    private SharedPreferences prefs;
+    private SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,13 +64,27 @@ public class FeedFragment extends Fragment {
         cryptoDao = appDatabase.cryptoDao();
         generator = new ServiceGenerator();
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                if (s.equals("default_currency")) {
+                    loadData(sharedPreferences.getString(s, "USD"));
+                } else if (s.equals("sort_key")) {
+
+                }
+            }
+        };
+
+        prefs.registerOnSharedPreferenceChangeListener(listener);
+
         mainRv.setLayoutManager(new LinearLayoutManager(getActivity()));
         mainRv.setAdapter(mAdapter);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadData();
+                loadData(prefs.getString("default_currency", "USD"));
                 refreshLayout.setRefreshing(false);
             }
         });
@@ -83,19 +101,19 @@ public class FeedFragment extends Fragment {
             @Override
             public void run() {
                 Log.d("test", "running networking");
-                loadData();
+                loadData(prefs.getString("default_currency", "USD"));
                 handler.postDelayed(this, 180000);
             }
         });
     }
 
-    public void loadData() {
+    public void loadData(final String currency) {
         generator.getFeed(new ResponseCallback<List<Crypto>>() {
             @Override
             public void success(List<Crypto> cryptos) {
                 progressBar.setVisibility(View.GONE);
                 mainList = cryptos;
-                mAdapter.addAll(mainList);
+                mAdapter.addAll(mainList, currency);
 
                 if (cryptoDao.getCryptoCount() == 0) {
                     cryptoDao.insertAll(mainList);
@@ -109,7 +127,7 @@ public class FeedFragment extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "Error in loading", Toast.LENGTH_SHORT).show();
             }
-        });
+        }, currency);
     }
 
     public void scrollToTop() {
@@ -118,10 +136,10 @@ public class FeedFragment extends Fragment {
 
     public void showSearchList(String text) {
         List<Crypto> searchList = cryptoDao.searchCryptos("%" + text.toUpperCase() + "%", "%" + text.toLowerCase() + "%");
-        mAdapter.addAll(searchList);
+        mAdapter.addAll(searchList, prefs.getString("default_currency", "USD"));
     }
 
     public void showMainList() {
-        mAdapter.addAll(mainList);
+        mAdapter.addAll(mainList, prefs.getString("default_currency", "USD"));
     }
 }

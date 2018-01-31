@@ -1,10 +1,12 @@
 package io.github.rajdeep1008.cryptofolio.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,9 +24,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.rajdeep1008.cryptofolio.R;
 import io.github.rajdeep1008.cryptofolio.adapter.CryptoAdapter;
+import io.github.rajdeep1008.cryptofolio.data.AppDatabase;
 import io.github.rajdeep1008.cryptofolio.data.Crypto;
 import io.github.rajdeep1008.cryptofolio.data.CryptoDao;
-import io.github.rajdeep1008.cryptofolio.extras.AppDatabase;
 import io.github.rajdeep1008.cryptofolio.extras.Utilities;
 import io.github.rajdeep1008.cryptofolio.rest.ResponseCallback;
 import io.github.rajdeep1008.cryptofolio.rest.ServiceGenerator;
@@ -47,6 +49,8 @@ public class FavoritesFragment extends Fragment {
     private AppDatabase appDatabase;
     private CryptoDao cryptoDao;
     private ServiceGenerator generator;
+    private SharedPreferences prefs;
+    private SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,13 +68,27 @@ public class FavoritesFragment extends Fragment {
         cryptoDao = appDatabase.cryptoDao();
         generator = new ServiceGenerator();
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                if (s.equals("default_currency")) {
+                    loadFavorites(sharedPreferences.getString(s, "USD"));
+                } else if (s.equals("sort_key")) {
+
+                }
+            }
+        };
+
+        prefs.registerOnSharedPreferenceChangeListener(listener);
+
         mainRv.setLayoutManager(new LinearLayoutManager(getActivity()));
         mainRv.setAdapter(mAdapter);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadFavorites();
+                loadFavorites(prefs.getString("default_currency", "USD"));
                 refreshLayout.setRefreshing(false);
             }
         });
@@ -87,16 +105,16 @@ public class FavoritesFragment extends Fragment {
             @Override
             public void run() {
                 Log.d("test", "running");
-                loadFavorites();
+                loadFavorites(prefs.getString("default_currency", "USD"));
                 handler.postDelayed(this, 180000);
             }
         });
     }
 
-    public void loadFavorites() {
+    public void loadFavorites(String currency) {
         final List<String> favoriteIds = Utilities.getFavorites(getActivity().getApplicationContext());
 
-        if (favoriteIds.size() != 0 && favoriteIds != null) {
+        if (favoriteIds != null && favoriteIds.size() != 0) {
             mainRv.setVisibility(View.VISIBLE);
             emptyTv.setVisibility(View.GONE);
 
@@ -117,7 +135,7 @@ public class FavoritesFragment extends Fragment {
                         }
                     }
 
-                    mAdapter.addAll(favoriteList);
+                    mAdapter.addAll(favoriteList, prefs.getString("default_currency", "USD"));
                 }
 
                 @Override
@@ -125,7 +143,7 @@ public class FavoritesFragment extends Fragment {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), "Error in loading", Toast.LENGTH_SHORT).show();
                 }
-            });
+            }, currency);
         } else {
             progressBar.setVisibility(View.GONE);
             mainRv.setVisibility(View.GONE);

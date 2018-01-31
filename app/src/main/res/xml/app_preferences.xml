@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/title_first_section">
+
+        <ListPreference
+            android:defaultValue="USD"
+            android:dialogTitle="@string/dialog_title_currency_list_preference"
+            android:entries="@array/entries_currency_list_preference"
+            android:entryValues="@array/entryvalues_currency_list_preference"
+            android:key="default_currency"
+            android:summary="Currency for prices"
+            android:title="@string/title_currency_list_preference" />
+
+        <ListPreference
+            android:defaultValue="RANK"
+            android:dialogTitle="@string/dialog_title_sort_list_preference"
+            android:entries="@array/entries_sort_list_preference"
+            android:entryValues="@array/entryvalues_sort_list_preference"
+            android:key="sort_key"
+            android:summary="Sort the cryptos"
+            android:title="@string/title_sort_list_preference" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

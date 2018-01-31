@@ -18,7 +18,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,8 +38,9 @@ import io.github.rajdeep1008.cryptofolio.rest.ServiceGenerator;
 
 public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder> {
 
-    List<Crypto> itemList;
-    Context mContext;
+    private List<Crypto> itemList;
+    private Context mContext;
+    public static String currency;
 
     public CryptoAdapter(List<Crypto> list, Context context) {
         itemList = list;
@@ -57,8 +61,9 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
         holder.init(cryptoItem);
     }
 
-    public void addAll(List<Crypto> list) {
+    public void addAll(List<Crypto> list, String curr) {
         itemList = list;
+        currency = curr;
         notifyDataSetChanged();
     }
 
@@ -98,6 +103,7 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
         private static final int TYPE_HOUR = 0;
         private static final int TYPE_DAY = 1;
         private static final int TYPE_WEEK = 2;
+        DecimalFormat df = new DecimalFormat(".####");
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
@@ -109,7 +115,7 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
             currentItem = item;
             symbolTv.setText(item.getSymbol() + " | ");
             nameTv.setText(item.getName());
-            priceTv.setText(item.getPriceUsd());
+            priceTv.setText(getPrice(item, currency));
             hourChangeTv.setText(getColoredChanges(item, "1h: " + item.getPercentChange1h() + "%", TYPE_HOUR));
             dayChangeTv.setText(getColoredChanges(item, "24h: " + item.getPercentChange24h() + "%", TYPE_DAY));
             weekChangeTv.setText(getColoredChanges(item, "7d: " + item.getPercentChange7d() + "%", TYPE_WEEK));
@@ -185,11 +191,11 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
                         if (favorite) {
                             Utilities.removeFavorites(mContext.getApplicationContext(), currentItem.getId());
                             Toast.makeText(mContext, "Removed", Toast.LENGTH_SHORT).show();
-                            ((MainActivity)mContext).updateFavorites();
+                            ((MainActivity) mContext).updateFavorites();
                         } else {
                             Utilities.addFavorites(mContext.getApplicationContext(), currentItem.getId());
                             Toast.makeText(mContext, "Added", Toast.LENGTH_SHORT).show();
-                            ((MainActivity)mContext).updateFavorites();
+                            ((MainActivity) mContext).updateFavorites();
                         }
                     }
                 }
@@ -197,6 +203,45 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
 
             builder.create().show();
             return true;
+        }
+
+        private String getPrice(Crypto item, String currency) {
+            String price = "";
+            switch (currency) {
+                case "USD":
+                    price += getCurrencyCode("en", "US") + df.format(Double.valueOf(item.getPriceUsd()));
+                    break;
+                case "AUD":
+                    price += getCurrencyCode("en", "AU") + df.format(Double.valueOf(item.getPriceAud()));
+                    break;
+                case "CAD":
+                    price += getCurrencyCode("en", "CA") + df.format(Double.valueOf(item.getPriceCad()));
+                    break;
+                case "EUR":
+                    price += getCurrencyCode("en", "EU") + df.format(Double.valueOf(item.getPriceEur()));
+                    break;
+                case "HKD":
+                    price += getCurrencyCode("en", "HK") + df.format(Double.valueOf(item.getPriceHkd()));
+                    break;
+                case "GBP":
+                    price += getCurrencyCode("en", "GB") + df.format(Double.valueOf(item.getPriceGbp()));
+                    break;
+                case "JPY":
+                    price += getCurrencyCode("en", "JP") + df.format(Double.valueOf(item.getPriceJpy()));
+                    break;
+                case "INR":
+                    price += getCurrencyCode("en", "IN") + df.format(Double.valueOf(item.getPriceInr()));
+                    break;
+            }
+            return price;
+        }
+
+        private String getCurrencyCode(String languageCode, String countryCode) {
+            Locale locale = new Locale(languageCode, countryCode);
+            Currency currency = Currency.getInstance(locale);
+            String symbol = currency.getSymbol();
+
+            return symbol;
         }
     }
 }

@@ -6,8 +6,12 @@
     <string name="text_portfolio">Portfolio</string>
     <string name="text_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_title">Search</string>
     <string name="search_hint">Search...</string>
+    <string name="title_currency_list_preference">Default Currency</string>
+    <string name="dialog_title_currency_list_preference">Show prices as</string>
+    <string name="title_first_section">General</string>
+    <string name="dialog_title_sort_list_preference">Sort order</string>
+    <string name="title_sort_list_preference">Sort order</string>
 </resources>

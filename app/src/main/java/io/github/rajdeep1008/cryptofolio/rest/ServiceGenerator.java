@@ -35,9 +35,9 @@ public class ServiceGenerator {
         return retrofit.create(serviceClass);
     }
 
-    public void getFeed(final ResponseCallback<List<Crypto>> callback) {
+    public void getFeed(final ResponseCallback<List<Crypto>> callback, String currency) {
         ApiClient apiClient = createService(ApiClient.class);
-        Call<List<Crypto>> call = apiClient.getCryptoData(0);
+        Call<List<Crypto>> call = apiClient.getCryptoData(0, currency);
 
         call.enqueue(new Callback<List<Crypto>>() {
             @Override

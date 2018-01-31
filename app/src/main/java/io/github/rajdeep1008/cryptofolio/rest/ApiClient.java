@@ -14,6 +14,6 @@ import retrofit2.http.Query;
 public interface ApiClient {
 
     @GET("ticker")
-    Call<List<Crypto>> getCryptoData(@Query("limit") int limit);
+    Call<List<Crypto>> getCryptoData(@Query("limit") int limit, @Query("convert") String currency);
 
 }

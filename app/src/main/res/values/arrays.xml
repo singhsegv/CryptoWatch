@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="entries_currency_list_preference">
+        <item>US Dollar</item>
+        <item>Australian Dollar</item>
+        <item>Canadian Dollar</item>
+        <item>Euro</item>
+        <item>Hong Kong Dollar</item>
+        <item>British Pound</item>
+        <item>Japanese Yen</item>
+        <item>Indian Rupee</item>
+    </string-array>
+
+    <string-array name="entryvalues_currency_list_preference">
+        <item>USD</item>
+        <item>AUD</item>
+        <item>CAD</item>
+        <item>EUR</item>
+        <item>HKD</item>
+        <item>GBP</item>
+        <item>JPY</item>
+        <item>INR</item>
+    </string-array>
+
+    <string-array name="entries_sort_list_preference">
+        <item>Rank</item>
+        <item>Price High to Low</item>
+        <item>Price Low to High</item>
+        <item>Change (24h) High to Low</item>
+        <item>Change (24h) Low to High</item>
+        <item>Change (1h) High to Low</item>
+        <item>Change (1h) Low to High</item>
+    </string-array>
+
+    <string-array name="entryvalues_sort_list_preference">
+        <item>RANK</item>
+        <item>PHTL</item>
+        <item>PLTH</item>
+        <item>CHTL24</item>
+        <item>CLTH24</item>
+        <item>CHTL1</item>
+        <item>CLTH1</item>
+    </string-array>
+</resources>

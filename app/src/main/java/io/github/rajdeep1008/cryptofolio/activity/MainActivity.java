@@ -1,10 +1,12 @@
 package io.github.rajdeep1008.cryptofolio.activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MainPagerAdapter mAdapter;
     private int lastSelected;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         mAdapter = new MainPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mAdapter);
@@ -157,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateFavorites() {
         FavoritesFragment fragment = (FavoritesFragment) mPager.getAdapter().instantiateItem(mPager, 0);
-        fragment.loadFavorites();
+        fragment.loadFavorites(prefs.getString("default_currency", "USD"));
     }
 
     @OnClick(R.id.search_btn)
