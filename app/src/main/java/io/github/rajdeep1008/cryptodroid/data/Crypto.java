@@ -128,12 +128,22 @@ public class Crypto implements Parcelable {
     @Expose
     private String lastUpdated;
 
+    public Crypto() {
+    }
+
     protected Crypto(Parcel in) {
         id = in.readString();
         name = in.readString();
         symbol = in.readString();
         rank = in.readString();
         priceUsd = in.readString();
+        priceAud = in.readString();
+        priceCad = in.readString();
+        priceEur = in.readString();
+        priceHkd = in.readString();
+        priceGbp = in.readString();
+        priceJpy = in.readString();
+        priceInr = in.readString();
         priceBtc = in.readString();
         _24hVolumeUsd = in.readString();
         marketCapUsd = in.readString();
@@ -146,7 +156,35 @@ public class Crypto implements Parcelable {
         lastUpdated = in.readString();
     }
 
-    public Crypto() {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(symbol);
+        dest.writeString(rank);
+        dest.writeString(priceUsd);
+        dest.writeString(priceAud);
+        dest.writeString(priceCad);
+        dest.writeString(priceEur);
+        dest.writeString(priceHkd);
+        dest.writeString(priceGbp);
+        dest.writeString(priceJpy);
+        dest.writeString(priceInr);
+        dest.writeString(priceBtc);
+        dest.writeString(_24hVolumeUsd);
+        dest.writeString(marketCapUsd);
+        dest.writeString(availableSupply);
+        dest.writeString(totalSupply);
+        dest.writeString(maxSupply);
+        dest.writeString(percentChange1h);
+        dest.writeString(percentChange24h);
+        dest.writeString(percentChange7d);
+        dest.writeString(lastUpdated);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Crypto> CREATOR = new Creator<Crypto>() {
@@ -160,30 +198,6 @@ public class Crypto implements Parcelable {
             return new Crypto[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-        dest.writeString(symbol);
-        dest.writeString(rank);
-        dest.writeString(priceUsd);
-        dest.writeString(priceBtc);
-        dest.writeString(_24hVolumeUsd);
-        dest.writeString(marketCapUsd);
-        dest.writeString(availableSupply);
-        dest.writeString(totalSupply);
-        dest.writeString(maxSupply);
-        dest.writeString(percentChange1h);
-        dest.writeString(percentChange24h);
-        dest.writeString(percentChange7d);
-        dest.writeString(lastUpdated);
-    }
 
     public String getId() {
         return id;
@@ -360,4 +374,5 @@ public class Crypto implements Parcelable {
     public void setPriceInr(String priceInr) {
         this.priceInr = priceInr;
     }
+
 }
