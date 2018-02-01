@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.github.rajdeep1008.cryptofolio.fragment.FavoritesFragment">
+    tools:context="io.github.rajdeep1008.cryptodroid.fragment.FavoritesFragment">
 
     <TextView
         android:id="@+id/empty_tv"
@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="Your favorites list looks empty.\nSuch choosy much wow!"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="Save your favorite crypto currencies here."
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         android:visibility="gone"

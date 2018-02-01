@@ -20,12 +20,12 @@
         android:enabled="true"
         android:icon="@drawable/ic_change_history_black_48dp"
         android:title="@string/text_feed" />
-    <item
-        android:id="@+id/action_portfolio"
-        app:showAsAction="ifRoom"
-        android:enabled="true"
-        android:icon="@drawable/ic_account_balance_wallet_black_48dp"
-        android:title="@string/text_portfolio" />
+    <!--<item-->
+        <!--android:id="@+id/action_portfolio"-->
+        <!--app:showAsAction="ifRoom"-->
+        <!--android:enabled="true"-->
+        <!--android:icon="@drawable/ic_account_balance_wallet_black_48dp"-->
+        <!--android:title="@string/text_portfolio" />-->
     <item
         android:id="@+id/action_settings"
         app:showAsAction="ifRoom"
