@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.text.DecimalFormat;
+import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +32,7 @@ import io.github.rajdeep1008.cryptofolio.activity.MainActivity;
 import io.github.rajdeep1008.cryptofolio.data.Crypto;
 import io.github.rajdeep1008.cryptofolio.extras.Utilities;
 import io.github.rajdeep1008.cryptofolio.rest.ServiceGenerator;
+
 
 /**
  * Created by rajdeep1008 on 09/01/18.

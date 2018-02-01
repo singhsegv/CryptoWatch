@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,6 +27,7 @@ import io.github.rajdeep1008.cryptofolio.adapter.CryptoAdapter;
 import io.github.rajdeep1008.cryptofolio.data.AppDatabase;
 import io.github.rajdeep1008.cryptofolio.data.Crypto;
 import io.github.rajdeep1008.cryptofolio.data.CryptoDao;
+import io.github.rajdeep1008.cryptofolio.extras.CryptoComparator;
 import io.github.rajdeep1008.cryptofolio.rest.ResponseCallback;
 import io.github.rajdeep1008.cryptofolio.rest.ServiceGenerator;
 
@@ -69,9 +71,11 @@ public class FeedFragment extends Fragment {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
                 if (s.equals("default_currency")) {
-                    loadData(sharedPreferences.getString(s, "USD"));
+                    loadData(sharedPreferences.getString(s, "USD"), prefs.getString("sort_key", "RANK"));
                 } else if (s.equals("sort_key")) {
-
+                    CryptoComparator comparatorName = getComparatorString(sharedPreferences.getString(s, "RANK"));
+                    Collections.sort(mainList, CryptoComparator.getComparator(comparatorName));
+                    mAdapter.addAll(mainList, prefs.getString("default_currency", "USD"));
                 }
             }
         };
@@ -84,7 +88,7 @@ public class FeedFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadData(prefs.getString("default_currency", "USD"));
+                loadData(prefs.getString("default_currency", "USD"), prefs.getString("sort_key", "RANK"));
                 refreshLayout.setRefreshing(false);
             }
         });
@@ -101,18 +105,20 @@ public class FeedFragment extends Fragment {
             @Override
             public void run() {
                 Log.d("test", "running networking");
-                loadData(prefs.getString("default_currency", "USD"));
+                loadData(prefs.getString("default_currency", "USD"), prefs.getString("sort_key", "RANK"));
                 handler.postDelayed(this, 180000);
             }
         });
     }
 
-    public void loadData(final String currency) {
+    public void loadData(final String currency, final String comparatorName) {
         generator.getFeed(new ResponseCallback<List<Crypto>>() {
             @Override
             public void success(List<Crypto> cryptos) {
                 progressBar.setVisibility(View.GONE);
                 mainList = cryptos;
+                CryptoComparator comparator = getComparatorString(comparatorName);
+//                Collections.sort(mainList, CryptoComparator.getComparator(comparator));
                 mAdapter.addAll(mainList, currency);
 
                 if (cryptoDao.getCryptoCount() == 0) {
@@ -141,5 +147,33 @@ public class FeedFragment extends Fragment {
 
     public void showMainList() {
         mAdapter.addAll(mainList, prefs.getString("default_currency", "USD"));
+    }
+
+    private CryptoComparator getComparatorString(String name) {
+        CryptoComparator comparator = CryptoComparator.RANK;
+        switch (name) {
+            case "RANK":
+                comparator = CryptoComparator.RANK;
+                break;
+            case "PHTL":
+                comparator = CryptoComparator.PHTL;
+                break;
+            case "PLTH":
+                comparator = CryptoComparator.PLTH;
+                break;
+            case "CHTL24":
+                comparator = CryptoComparator.CHTL24;
+                break;
+            case "CLTH24":
+                comparator = CryptoComparator.CLTH24;
+                break;
+            case "CHTL1":
+                comparator = CryptoComparator.CHTL1;
+                break;
+            case "CLTH1":
+                comparator = CryptoComparator.CLTH1;
+                break;
+        }
+        return comparator;
     }
 }
