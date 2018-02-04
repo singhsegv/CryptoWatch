@@ -33,13 +33,15 @@
                     android:background="@android:color/transparent"
                     android:padding="16dp"
                     android:src="@drawable/ic_action_back"
+                    android:tint="@color/colorPrimaryDark"
                     android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/heading_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:text="Crypto Droid"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="22sp"

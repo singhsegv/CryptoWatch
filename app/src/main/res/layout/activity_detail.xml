@@ -31,7 +31,8 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:padding="16dp"
-                    android:src="@drawable/ic_action_back" />
+                    android:src="@drawable/ic_action_back"
+                    android:tint="@color/colorPrimaryDark" />
 
                 <TextView
                     android:id="@+id/heading_tv"

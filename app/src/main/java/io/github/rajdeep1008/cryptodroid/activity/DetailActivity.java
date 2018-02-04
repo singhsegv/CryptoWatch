@@ -95,7 +95,7 @@ public class DetailActivity extends AppCompatActivity {
             finishActivity();
         }
 
-        final boolean favorite = Utilities.checkFavorite(getApplicationContext(), currentCrypto);
+        boolean favorite = Utilities.checkFavorite(getApplicationContext(), currentCrypto);
 
         if (favorite) {
             favBtn.setText("Remove from favorites");
@@ -119,6 +119,18 @@ public class DetailActivity extends AppCompatActivity {
     @OnClick(R.id.back_btn)
     public void finishActivity() {
         onBackPressed();
+    }
+
+    @OnClick(R.id.fav_btn)
+    public void addToFavorites() {
+        boolean favorite = Utilities.checkFavorite(getApplicationContext(), currentCrypto);
+        if (favorite) {
+            Utilities.removeFavorites(getApplicationContext(), currentCrypto.getId());
+            Toast.makeText(this, "Removed", Toast.LENGTH_SHORT).show();
+        } else {
+            Utilities.addFavorites(getApplicationContext(), currentCrypto.getId());
+            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private String getPrice(Crypto item, String currency) {

@@ -73,7 +73,10 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        if (itemList != null)
+            return itemList.size();
+
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
