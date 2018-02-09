@@ -33,6 +33,10 @@ dependencies {
     implementation 'com.android.support:preference-v14:27.0.2'
     implementation 'android.arch.persistence.room:runtime:' + rootProject.archRoomVersion;
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     annotationProcessor 'android.arch.persistence.room:compiler:' + rootProject.archRoomVersion;
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    compile 'com.facebook.stetho:stetho:1.5.0'
+
 }

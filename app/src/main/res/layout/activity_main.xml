@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="io.github.rajdeep1008.cryptodroid.activity.MainActivity">
+    tools:context="io.github.rajdeep1008.cryptowatch.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -42,9 +42,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="Crypto Droid"
+                    android:text="Crypto Watch"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:visibility="visible" />
 
                 <ImageButton
@@ -88,7 +88,7 @@
         app:itemTextColor="@color/bnv_foreground"
         app:menu="@menu/bottom_navigation_main" />
 
-    <io.github.rajdeep1008.cryptodroid.extras.NonSwipeableViewPager
+    <io.github.rajdeep1008.cryptowatch.extras.NonSwipeableViewPager
         android:id="@+id/main_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

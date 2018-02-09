@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="io.github.rajdeep1008.cryptodroid.activity.DetailActivity">
+    tools:context="io.github.rajdeep1008.cryptowatch.activity.DetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -89,12 +89,96 @@
                 android:textSize="14sp"
                 tools:text="1234" />
 
+            <RelativeLayout
+                android:id="@+id/chart_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/price_tv"
+                android:layout_marginTop="12dp">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+                <ProgressBar
+                    android:id="@+id/chart_progress"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    android:indeterminateTint="@color/colorPrimaryDark"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/no_chart_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Chart not available"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/btn_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chart_rl"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <TextView
+                    android:id="@+id/day_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/chart_tv_bg"
+                    android:gravity="center"
+                    android:text="1D" />
+
+                <TextView
+                    android:id="@+id/week_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="1W" />
+
+                <TextView
+                    android:id="@+id/month_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="1M" />
+
+                <TextView
+                    android:id="@+id/half_year_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="6M" />
+
+                <TextView
+                    android:id="@+id/year_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="1Y" />
+            </LinearLayout>
+
             <View
                 android:id="@+id/div1"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/price_tv"
+                android:layout_below="@id/btn_ll"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="12dp"
                 android:background="#cccccc" />
