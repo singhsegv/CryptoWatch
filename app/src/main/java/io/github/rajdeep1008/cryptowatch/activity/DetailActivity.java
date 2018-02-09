@@ -100,13 +100,9 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.chart_progress)
     ProgressBar chartProgress;
 
-    @BindView(R.id.no_chart_tv)
-    TextView noChartTv;
-
     private Crypto currentCrypto;
     private SharedPreferences prefs;
     private ServiceGenerator generator;
-    private History historyData;
 
     private static final int TYPE_HOUR = 0;
     private static final int TYPE_DAY = 1;
@@ -118,8 +114,6 @@ public class DetailActivity extends AppCompatActivity {
     public static final String DURATION_TYPE_HALF_YEAR = "180day";
     public static final String DURATION_TYPE_YEAR = "365day";
 
-    List<Entry> entries = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,12 +122,10 @@ public class DetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         generator = new ServiceGenerator();
-        chart.setNoDataText("");
 
         if (getIntent() != null) {
             if (getIntent().getExtras() != null) {
                 if (getIntent().getExtras().getParcelable("crypto") != null) {
-                    chartProgress.setVisibility(View.VISIBLE);
                     currentCrypto = getIntent().getExtras().getParcelable("crypto");
                     loadChart(DURATION_TYPE_DAY);
                 }
@@ -249,8 +241,6 @@ public class DetailActivity extends AppCompatActivity {
     public void handleChart(View view) {
         switch (view.getId()) {
             case R.id.day_tv:
-                chart.clear();
-                chartProgress.setVisibility(View.VISIBLE);
                 loadChart(DURATION_TYPE_DAY);
                 dayTv.setBackground(getResources().getDrawable(R.drawable.chart_tv_bg));
                 weekTv.setBackgroundColor(getResources().getColor(R.color.white));
@@ -259,8 +249,6 @@ public class DetailActivity extends AppCompatActivity {
                 yearTv.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.week_tv:
-                chart.clear();
-                chartProgress.setVisibility(View.VISIBLE);
                 loadChart(DURATION_TYPE_WEEK);
                 weekTv.setBackground(getResources().getDrawable(R.drawable.chart_tv_bg));
                 dayTv.setBackgroundColor(getResources().getColor(R.color.white));
@@ -269,8 +257,6 @@ public class DetailActivity extends AppCompatActivity {
                 yearTv.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.month_tv:
-                chart.clear();
-                chartProgress.setVisibility(View.VISIBLE);
                 loadChart(DURATION_TYPE_MONTH);
                 monthTv.setBackground(getResources().getDrawable(R.drawable.chart_tv_bg));
                 weekTv.setBackgroundColor(getResources().getColor(R.color.white));
@@ -279,8 +265,6 @@ public class DetailActivity extends AppCompatActivity {
                 yearTv.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.half_year_tv:
-                chart.clear();
-                chartProgress.setVisibility(View.VISIBLE);
                 loadChart(DURATION_TYPE_HALF_YEAR);
                 halfYearTv.setBackground(getResources().getDrawable(R.drawable.chart_tv_bg));
                 weekTv.setBackgroundColor(getResources().getColor(R.color.white));
@@ -289,8 +273,6 @@ public class DetailActivity extends AppCompatActivity {
                 yearTv.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.year_tv:
-                chart.clear();
-                chartProgress.setVisibility(View.VISIBLE);
                 loadChart(DURATION_TYPE_YEAR);
                 yearTv.setBackground(getResources().getDrawable(R.drawable.chart_tv_bg));
                 weekTv.setBackgroundColor(getResources().getColor(R.color.white));
@@ -302,6 +284,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void loadChart(final String duration) {
+        chartProgress.setVisibility(View.VISIBLE);
+        chart.clear();
 
         final IAxisValueFormatter formatter = new IAxisValueFormatter() {
             @Override
@@ -334,13 +318,12 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void success(History history) {
                 if (history != null) {
-                    noChartTv.setVisibility(View.GONE);
                     chartProgress.setVisibility(View.GONE);
-                    chart.invalidate();
-                    historyData = history;
-                    for (List<Float> temp : historyData.getPriceList()) {
+                    List<Entry> entries = new ArrayList<>();
+                    for (List<Float> temp : history.getPriceList()) {
                         entries.add(new Entry(temp.get(0), temp.get(1)));
                     }
+
                     LineDataSet dataSet = new LineDataSet(entries, "");
                     LineData lineData = new LineData(dataSet);
                     XAxis xAxis = chart.getXAxis();
@@ -348,8 +331,9 @@ public class DetailActivity extends AppCompatActivity {
                     chart.getDescription().setText("Price in USD");
                     chart.getLegend().setEnabled(false);
                     chart.setData(lineData);
+                    chart.invalidate();
                 } else {
-                    noChartTv.setVisibility(View.VISIBLE);
+                    chart.clear();
                     chartProgress.setVisibility(View.GONE);
                 }
             }
