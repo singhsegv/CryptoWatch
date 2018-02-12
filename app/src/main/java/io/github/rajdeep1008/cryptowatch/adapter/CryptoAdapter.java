@@ -193,9 +193,9 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.ViewHolder
             final boolean favorite = Utilities.checkFavorite(mContext.getApplicationContext(), currentItem);
 
             if (favorite) {
-                menuItems = new String[]{"Remove from favorites", "Set Alert"};
+                menuItems = new String[]{"Remove from favorites", "Add to watchlist"};
             } else {
-                menuItems = new String[]{"Add to favorites", "Set Alert"};
+                menuItems = new String[]{"Add to favorites", "Add to watchlist"};
             }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);

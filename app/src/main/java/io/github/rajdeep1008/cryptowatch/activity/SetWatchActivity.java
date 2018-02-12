@@ -132,6 +132,7 @@ public class SetWatchActivity extends AppCompatActivity {
         }
 
         AlertCrypto item = new AlertCrypto(currentCrypto.getId(),
+                currentCrypto.getSymbol(),
                 currentCrypto.getName(),
                 rawPrice,
                 null,
@@ -174,6 +175,7 @@ public class SetWatchActivity extends AppCompatActivity {
         }
 
         alertDao.insertSingle(item);
+        Utilities.addToWatchlist(this, currentCrypto.getId());
         Toast.makeText(this, "Alert set for " + currentCrypto.getName(), Toast.LENGTH_SHORT).show();
         finish();
     }

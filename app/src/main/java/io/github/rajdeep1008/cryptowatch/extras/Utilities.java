@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import io.github.rajdeep1008.cryptowatch.data.AlertCrypto;
 import io.github.rajdeep1008.cryptowatch.data.Crypto;
 
 /**
@@ -67,7 +68,7 @@ public class Utilities {
         return (ArrayList<String>) favoriteList;
     }
 
-    public static boolean checkWatchlist(Context context, Crypto item) {
+    public static boolean checkWatchlist(Context context, AlertCrypto item) {
         SharedPreferences preferences = context.getSharedPreferences(PREFS_NAME, context.MODE_PRIVATE);
         Set<String> watchlistSet = preferences.getStringSet(WATCHLIST_KEY, new HashSet<String>());
         if (watchlistSet.contains(item.getId())) {

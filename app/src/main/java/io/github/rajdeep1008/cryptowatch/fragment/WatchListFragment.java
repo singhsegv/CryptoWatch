@@ -76,7 +76,7 @@ public class WatchListFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadFavorites(prefs.getString("default_currency", "USD"));
+                loadWatchList();
                 refreshLayout.setRefreshing(false);
             }
         });
@@ -91,46 +91,43 @@ public class WatchListFragment extends Fragment {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("test", "running");
-                loadFavorites(prefs.getString("default_currency", "USD"));
-                handler.postDelayed(this, 180000);
+                Log.d("test", "running the watchlist");
+                loadWatchList();
+                handler.postDelayed(this, 120000);
             }
         });
     }
 
-    public void loadFavorites(String currency) {
-        final List<String> favoriteIds = Utilities.getFavorites(getActivity().getApplicationContext());
+    public void loadWatchList() {
+        progressBar.setVisibility(View.VISIBLE);
+        final List<String> favoriteIds = Utilities.getWatchlist(getActivity().getApplicationContext());
 
         if (favoriteIds != null && favoriteIds.size() != 0) {
             mainRv.setVisibility(View.VISIBLE);
             emptyTv.setVisibility(View.GONE);
 
-            generator.getFeed(new ResponseCallback<List<Crypto>>() {
-                @Override
-                public void success(List<Crypto> cryptos) {
-                    emptyTv.setVisibility(View.GONE);
-                    progressBar.setVisibility(View.GONE);
+            List<AlertCrypto> alertCryptos = alertDao.getAll();
+            final List<AlertCrypto> updatedList = new ArrayList<>();
 
-                    List<Crypto> favoriteList = new ArrayList<>();
-
-                    for (Crypto item : cryptos) {
-                        for (String id : favoriteIds) {
-                            if (item.getId().equals(id)) {
-                                favoriteList.add(item);
-                                break;
-                            }
-                        }
+            for (final AlertCrypto item : alertCryptos) {
+                generator.getSingleCrypto(new ResponseCallback<Crypto>() {
+                    @Override
+                    public void success(Crypto crypto) {
+                        progressBar.setVisibility(View.GONE);
+                        AlertCrypto temp = item;
+                        temp.setPrice(Utilities.getPriceWithoutCode(crypto, item.getCurrencySymbol()));
+                        updatedList.add(temp);
+                        mAdapter.addAll(updatedList);
                     }
 
-//                    mAdapter.addAll(favoriteList, prefs.getString("default_currency", "USD"));
-                }
+                    @Override
+                    public void failure(Crypto crypto) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getActivity(), "Error in updating data.", Toast.LENGTH_SHORT).show();
+                    }
+                }, item.getId(), item.getCurrencySymbol());
+            }
 
-                @Override
-                public void failure(List<Crypto> cryptos) {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), "Error in loading", Toast.LENGTH_SHORT).show();
-                }
-            }, currency);
         } else {
             progressBar.setVisibility(View.GONE);
             mainRv.setVisibility(View.GONE);

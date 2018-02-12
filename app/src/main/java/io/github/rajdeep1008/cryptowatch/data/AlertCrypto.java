@@ -16,6 +16,9 @@ public class AlertCrypto {
     @NonNull
     private String id;
 
+    @ColumnInfo(name = "symbol")
+    private String symbol;
+
     @ColumnInfo(name = "name")
     private String name;
 
@@ -31,8 +34,9 @@ public class AlertCrypto {
     @ColumnInfo(name = "currency_symbol")
     private String currencySymbol;
 
-    public AlertCrypto(@NonNull String id, String name, String price, String upperPrice, String lowerPrice, String currencySymbol) {
+    public AlertCrypto(@NonNull String id, String symbol, String name, String price, String upperPrice, String lowerPrice, String currencySymbol) {
         this.id = id;
+        this.symbol = symbol;
         this.name = name;
         this.price = price;
         this.upperPrice = upperPrice;
@@ -47,6 +51,14 @@ public class AlertCrypto {
 
     public void setId(@NonNull String id) {
         this.id = id;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getName() {

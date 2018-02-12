@@ -27,6 +27,7 @@ import io.github.rajdeep1008.cryptowatch.extras.BottomNavigationViewHelper;
 import io.github.rajdeep1008.cryptowatch.extras.NonSwipeableViewPager;
 import io.github.rajdeep1008.cryptowatch.fragment.FavoritesFragment;
 import io.github.rajdeep1008.cryptowatch.fragment.FeedFragment;
+import io.github.rajdeep1008.cryptowatch.fragment.WatchListFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -166,11 +167,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         updateFavorites();
+        updateWatchlist();
     }
 
     public void updateFavorites() {
         FavoritesFragment fragment = (FavoritesFragment) mPager.getAdapter().instantiateItem(mPager, 0);
         fragment.loadFavorites(prefs.getString("default_currency", "USD"));
+    }
+
+    public void updateWatchlist() {
+        WatchListFragment fragment = (WatchListFragment) mPager.getAdapter().instantiateItem(mPager, 1);
+        fragment.loadWatchList();
     }
 
     @OnClick(R.id.search_btn)

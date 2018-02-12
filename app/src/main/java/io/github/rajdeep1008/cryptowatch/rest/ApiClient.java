@@ -21,4 +21,6 @@ public interface ApiClient {
     @GET("{duration}/{symbol}")
     Call<History> getCryptoHistory(@Path("duration") String duration, @Path("symbol") String symbol);
 
+    @GET("ticker/{id}")
+    Call<List<Crypto>> getSingleCrypto(@Path("id") String id, @Query("convert") String currency);
 }

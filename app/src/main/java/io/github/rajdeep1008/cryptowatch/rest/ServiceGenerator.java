@@ -1,5 +1,7 @@
 package io.github.rajdeep1008.cryptowatch.rest;
 
+import android.util.Log;
+
 import java.util.List;
 
 import io.github.rajdeep1008.cryptowatch.data.Crypto;
@@ -51,6 +53,27 @@ public class ServiceGenerator {
 
             @Override
             public void onFailure(Call<List<Crypto>> call, Throwable t) {
+                callback.failure(null);
+            }
+        });
+    }
+
+    public void getSingleCrypto(final ResponseCallback<Crypto> callback, String id, String currency) {
+        builder = changeApiBaseUrl(BASE_URL);
+        retrofit = builder.build();
+        ApiClient apiClient = createService(ApiClient.class);
+
+        Call<List<Crypto>> call = apiClient.getSingleCrypto(id, currency);
+        call.enqueue(new Callback<List<Crypto>>() {
+            @Override
+            public void onResponse(Call<List<Crypto>> call, Response<List<Crypto>> response) {
+                callback.success(response.body().get(0));
+            }
+
+            @Override
+            public void onFailure(Call<List<Crypto>> call, Throwable t) {
+                Log.d("test", t.getMessage());
+                callback.failure(null);
             }
         });
     }
@@ -69,7 +92,7 @@ public class ServiceGenerator {
 
             @Override
             public void onFailure(Call<History> call, Throwable t) {
-
+                callback.failure(null);
             }
         });
     }
