@@ -18,6 +18,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.firebase.jobdispatcher.Constraint;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.Trigger;
+
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,6 +37,7 @@ import io.github.rajdeep1008.cryptowatch.extras.NonSwipeableViewPager;
 import io.github.rajdeep1008.cryptowatch.fragment.FavoritesFragment;
 import io.github.rajdeep1008.cryptowatch.fragment.FeedFragment;
 import io.github.rajdeep1008.cryptowatch.fragment.WatchListFragment;
+import io.github.rajdeep1008.cryptowatch.service.CryptoUpdateService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private MainPagerAdapter mAdapter;
     private int lastSelected;
     private SharedPreferences prefs;
+    private FirebaseJobDispatcher dispatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +163,10 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+        dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+        Job job = createJob(dispatcher);
+        dispatcher.schedule(job);
     }
 
     @Override
@@ -206,5 +221,22 @@ public class MainActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    public Job createJob(FirebaseJobDispatcher dispatcher) {
+        int periodicity = (int) TimeUnit.MINUTES.toSeconds(2);
+        int toleranceInterval = (int) TimeUnit.MINUTES.toSeconds(1);
+
+        Job job = dispatcher.newJobBuilder()
+                .setService(CryptoUpdateService.class)
+                .setTag("CryptoUpdateJob")
+                .setLifetime(Lifetime.FOREVER)
+                .setReplaceCurrent(true)
+                .setRecurring(true)
+                .setTrigger(Trigger.executionWindow(periodicity - toleranceInterval, periodicity))
+                .setConstraints(Constraint.ON_ANY_NETWORK)
+                .build();
+
+        return job;
     }
 }

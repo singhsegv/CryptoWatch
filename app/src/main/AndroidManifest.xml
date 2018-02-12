@@ -36,6 +36,14 @@
             android:name=".activity.SetWatchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
+        <service
+            android:name=".service.CryptoUpdateService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
