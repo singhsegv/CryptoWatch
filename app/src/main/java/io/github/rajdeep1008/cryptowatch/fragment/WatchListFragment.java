@@ -91,7 +91,6 @@ public class WatchListFragment extends Fragment {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("test", "running the watchlist");
                 loadWatchList();
                 handler.postDelayed(this, 120000);
             }

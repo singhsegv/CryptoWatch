@@ -104,7 +104,6 @@ public class FeedFragment extends Fragment {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("test", "running networking");
                 loadData(prefs.getString("default_currency", "USD"), prefs.getString("sort_key", "RANK"));
                 handler.postDelayed(this, 180000);
             }

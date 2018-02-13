@@ -24,13 +24,11 @@ public class HTTPLoggingInterceptor implements Interceptor {
         if (request.method().equalsIgnoreCase("post")) {
             requestLog = requestLog + "\n" + bodyToString(request);
         }
-        Log.d("rest", "request" + "\n" + requestLog);
 
         Response response = chain.proceed(request);
         long t2 = System.nanoTime();
         String responseLog = String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers());
         String bodyString = response.body().string();
-        Log.d("rest", "response" + "\n" + responseLog + "\n" + bodyString);
 
         return response.newBuilder()
                 .body(ResponseBody.create(response.body().contentType(), bodyString))

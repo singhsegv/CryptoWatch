@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
@@ -39,12 +38,15 @@ public class CryptoUpdateService extends JobService {
 
     @Override
     public boolean onStartJob(final JobParameters job) {
-        Log.d("test", "job started");
         appDatabase = AppDatabase.getInstance(this);
         alertDao = appDatabase.alertDao();
         serviceGenerator = new ServiceGenerator();
 
         final List<AlertCrypto> cryptos = alertDao.getAll();
+        if (cryptos.size() == 0) {
+            jobFinished(job, false);
+        }
+
         for (int i = 0; i < cryptos.size(); i++) {
             final int finalI = i;
             serviceGenerator.getSingleCrypto(new ResponseCallback<Crypto>() {

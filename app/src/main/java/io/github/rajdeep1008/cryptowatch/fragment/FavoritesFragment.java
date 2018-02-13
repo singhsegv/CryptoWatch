@@ -102,7 +102,6 @@ public class FavoritesFragment extends Fragment {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("test", "running");
                 loadFavorites(prefs.getString("default_currency", "USD"));
                 handler.postDelayed(this, 180000);
             }

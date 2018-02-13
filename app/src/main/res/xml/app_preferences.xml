@@ -23,4 +23,16 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="About">
+        <io.github.rajdeep1008.cryptowatch.extras.ExtraPreference
+            android:key="privacy_policy"
+            android:title="Privacy Policy" />
+        <io.github.rajdeep1008.cryptowatch.extras.ExtraPreference
+            android:key="eula"
+            android:title="Eula" />
+        <io.github.rajdeep1008.cryptowatch.extras.ExtraPreference
+            android:key="about"
+            android:title="About" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

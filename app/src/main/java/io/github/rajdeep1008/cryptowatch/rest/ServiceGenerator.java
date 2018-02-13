@@ -72,7 +72,6 @@ public class ServiceGenerator {
 
             @Override
             public void onFailure(Call<List<Crypto>> call, Throwable t) {
-                Log.d("test", t.getMessage());
                 callback.failure(null);
             }
         });
