@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Job createJob(FirebaseJobDispatcher dispatcher) {
-        int periodicity = (int) TimeUnit.MINUTES.toSeconds(2);
+        int periodicity = (int) TimeUnit.MINUTES.toSeconds(5);
         int toleranceInterval = (int) TimeUnit.MINUTES.toSeconds(1);
 
         Job job = dispatcher.newJobBuilder()

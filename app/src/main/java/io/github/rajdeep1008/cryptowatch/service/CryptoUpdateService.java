@@ -61,7 +61,7 @@ public class CryptoUpdateService extends JobService {
                             String body = mainCrypto.getName() + " (" + mainCrypto.getSymbol() + ") > " + mainCrypto.getUpperPrice() + mainCrypto.getCurrencySymbol();
                             alertDao.removeFromList(mainCrypto.getId());
                             Utilities.removefromWatchlist(CryptoUpdateService.this, mainCrypto.getId());
-                            sendNotification(mainCrypto.getId(), heading, body);
+                            sendNotification(crypto.getRank(), heading, body);
                         }
                     }
 
@@ -71,7 +71,7 @@ public class CryptoUpdateService extends JobService {
                             String body = mainCrypto.getName() + " (" + mainCrypto.getSymbol() + ") < " + mainCrypto.getUpperPrice() + mainCrypto.getCurrencySymbol();
                             alertDao.removeFromList(mainCrypto.getId());
                             Utilities.removefromWatchlist(CryptoUpdateService.this, mainCrypto.getId());
-                            sendNotification(mainCrypto.getId(), heading, body);
+                            sendNotification(crypto.getRank(), heading, body);
                         }
                     }
 
@@ -94,7 +94,7 @@ public class CryptoUpdateService extends JobService {
         return true;
     }
 
-    private void sendNotification(String id, String title, String messageBody) {
+    private void sendNotification(String rank, String title, String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -112,6 +112,6 @@ public class CryptoUpdateService extends JobService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
-        notificationManager.notify(Integer.parseInt(id), notificationBuilder.build());
+        notificationManager.notify(Integer.parseInt(rank), notificationBuilder.build());
     }
 }

@@ -45,7 +45,7 @@
         </service>
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="Enter your key here" />
+            android:value="Enter your fabric key here" />
     </application>
 
 </manifest>

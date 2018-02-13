@@ -88,6 +88,7 @@ public class FeedFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Log.d("test", "refreshed");
                 loadData(prefs.getString("default_currency", "USD"), prefs.getString("sort_key", "RANK"));
                 refreshLayout.setRefreshing(false);
             }
